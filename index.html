@@ -1,0 +1,46 @@
+<!doctype html>
+<html ng-app='shopular'>
+  <head>
+  	<title>26th Shopular</title>
+  	<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  	<link rel="stylesheet" href="css/main.css">
+  </head>
+  <body ng-controller='HeaderController as vm'>
+
+    <header class="col-md-6 col-md-offset-3">
+    		<!-- save as an example 
+      		<h1>{{vm.user.firstName}} {{vm.user.lastName}}</h1>
+      		<button ng-click="vm.clickMe()">Click Me</button>
+			-->
+      		<h2 ng-hide="vm.showMe">Shopular <i class="fa fa-shopping-cart" aria-hidden="true"></i></h2>
+
+			<table class="table" ng-class="vm.table">
+				<thead>
+					<tr>
+						<th>Name</th>
+						<th>Price</th>
+						<th>Quantity</th>
+						<th>Color</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr class="tableRow" ng-repeat="item in vm.items">
+						<td>{{item.name}}</td>
+						<td>{{(item.price - item.discount) * vm.tax | currency}} <span ng-if="item.discount > 0"><img src="https://tiy-learn-content.s3.amazonaws.com/98350f05-sale_2.png" alt="discount icon"></span></td> 
+							<!-- price minus discount (if there is one) will show discounted price.  currency converts numbers to dollars.  span includes if statement and image, if there is a discount will show discounted price and sale image -->
+						<td>{{item.quantity}}</td>
+						<td>{{item.color}}</td>
+					</tr>
+				</tbody>
+			</table>
+
+    </header>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular.min.js"></script>
+    <script src="https://code.jquery.com/jquery-1.12.4.js" integrity="sha256-Qw82+bXyGq6MydymqBxNPYTaUXXq7c8v3CwiYwLLNXU=" crossorigin="anonymous"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <script src='js/main.js'></script>
+  </body>
+</html>

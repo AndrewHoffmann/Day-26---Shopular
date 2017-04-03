@@ -1,0 +1,9 @@
+h2 {
+  color: #164399; }
+  h2 i {
+    color: #509236; }
+
+.tableRow:hover {
+  /* For concatenating selectors together when nesting, you need to use the parent selector (&): */
+  background-color: #509236;
+  color: white; }
