@@ -4,19 +4,23 @@
   	<title>26th Shopular</title>
   	<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
   	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link href="https://fonts.googleapis.com/css?family=Arsenal" rel="stylesheet">
 	<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
   	<link rel="stylesheet" href="css/main.css">
   </head>
-  <body ng-controller='HeaderController as vm'>
+  <body>
 
-    <header class="col-md-6 col-md-offset-3">
+    <section  ng-controller='TableController as vm' class="container col-md-8 col-md-offset-2">
     		<!-- save as an example 
       		<h1>{{vm.user.firstName}} {{vm.user.lastName}}</h1>
       		<button ng-click="vm.clickMe()">Click Me</button>
 			-->
-      		<h2 ng-hide="vm.showMe">Shopular <i class="fa fa-shopping-cart" aria-hidden="true"></i></h2>
 
-			<table class="table" ng-class="vm.table">
+			<header class="header">
+	  			<h2 ng-hide="vm.showMe">Shopular <i class="fa fa-shopping-cart" aria-hidden="true"></i></h2>
+			</header>
+	
+			<table class="table table-responsive" ng-class="vm.table">
 				<thead>
 					<tr>
 						<th>Name</th>
@@ -25,18 +29,41 @@
 						<th>Color</th>
 					</tr>
 				</thead>
+				
 				<tbody>
-					<tr class="tableRow" ng-repeat="item in vm.items">
-						<td>{{item.name}}</td>
-						<td>{{(item.price - item.discount) * vm.tax | currency}} <span ng-if="item.discount > 0"><img src="https://tiy-learn-content.s3.amazonaws.com/98350f05-sale_2.png" alt="discount icon"></span></td> 
-							<!-- price minus discount (if there is one) will show discounted price.  currency converts numbers to dollars.  span includes if statement and image, if there is a discount will show discounted price and sale image -->
-						<td>{{item.quantity}}</td>
-						<td>{{item.color}}</td>
+					<tr class="tableRow" ng-repeat="item in vm.data | orderBy:'quantity'">	<!-- sorting by quantity remaining (lowest quantity at the top) -quantity would be highest at top -->
+						<td>{{item.name | uppercase}}</td>
+						<td>{{vm.getPrice(item) | currency}} 
+							<img ng-show="item.discount > 0" src="https://tiy-learn-content.s3.amazonaws.com/98350f05-sale_2.png" alt="discount icon"></span>
+								<!-- currency converts numbers to dollars.  includes if statement and image, if there is a discount will show discounted price and sale image -->
+						</td> 
+						<td><button ng-click="vm.changeQuantity(item,true)">+</button>
+							{{item.quantity}}
+							<button ng-click="vm.changeQuantity(item,false)">-</button>
+						</td>
+						<td>
+							<div class="colorBox" style="background-color:{{item.color}}"></div> 
+							<div class="colorName" >{{item.color}}</div>
+						</td>
 					</tr>
 				</tbody>
 			</table>
 
-    </header>
+			<footer class="footer">
+
+				<h3>(+) ADD ITEM</h3>
+															<!-- after required:   ng-minlength="3" ng-maxlength="8" -->
+				<form class="addItem" novalidate name='addItem'>
+					<input type='text' placeholder="Name" ng-model='vm.item.name' required>
+					<input type='number' placeholder="Price" ng-model='vm.item.price' required>
+					<input type='number' placeholder="Discount" ng-model='vm.item.discount' required>
+					<input type='number' placeholder="Quantity" ng-model='vm.item.quantity' required>
+					<input type='text' placeholder="Color" ng-model='vm.item.color' required>
+					<input class="submitButton" type='submit' ng-click="vm.addItem()" value="SUBMIT">		<!-- on click will add item to data in JS -->
+				</form>
+
+			</footer>
+    </section>
 
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular.min.js"></script>
     <script src="https://code.jquery.com/jquery-1.12.4.js" integrity="sha256-Qw82+bXyGq6MydymqBxNPYTaUXXq7c8v3CwiYwLLNXU=" crossorigin="anonymous"></script>

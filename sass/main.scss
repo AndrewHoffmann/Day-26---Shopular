@@ -1,13 +1,76 @@
-h2 {
-    color: #164399;
-    i {
-        color: #509236;
+body {
+    font-family: 'Arsenal', sans-serif;
+}
+
+
+.header {
+    background-color: rgba(170, 166, 166, 0.3);   /* search google: #AAA6A6 rgb are the 3 #s, the a (0.3) replaces having to put an opacaity line */
+    h2 {
+        font-size: 50px;
+        color: #164399;
+            i {
+                color: #509236;
+        }   
     }
 }
 
-.tableRow{
+.table {
+    th {
+        font-size: 30px;
+    }
+}
+
+.tableRow {
+    font-size: 20px;
     &:hover {                       /* For concatenating selectors together when nesting, you need to use the parent selector (&): */
     background-color: #509236;
     color: white;
     }
 }
+
+button {
+    color: #164399;
+}
+
+.colorBox {
+	height:30px;
+	width:30px;
+	box-shadow:0px 0px 10px rgba(0,0,0,.2);
+    
+}
+
+.colorName {
+    text-transform: capitalize;
+}
+
+.footer {
+    background-color: rgba(170, 166, 166, 0.3);
+}
+
+h3 {
+    color: #509236;
+    font-size: 40px;
+}
+
+.addItem {
+    font-size: 20px;
+    input {
+        &.ng-invalid { 
+            background-color: red; 
+        }
+        &.ng-pristine {
+            background-color: white;
+        }
+        display: inline-block;
+        width: 16%;
+    }
+    .submitButton {
+        background-color: #164399;
+        color: white;
+    }
+}
+
+/* change placeholder font color */
+input::-webkit-input-placeholder {
+            color: #164399;
+        }
