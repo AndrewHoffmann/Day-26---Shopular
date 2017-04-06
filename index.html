@@ -11,16 +11,12 @@
   <body>
 
     <section  ng-controller='TableController as vm' class="container col-md-8 col-md-offset-2">
-    		<!-- save as an example 
-      		<h1>{{vm.user.firstName}} {{vm.user.lastName}}</h1>
-      		<button ng-click="vm.clickMe()">Click Me</button>
-			-->
 
 			<header class="header">
 	  			<h2 ng-hide="vm.showMe">Shopular <i class="fa fa-shopping-cart" aria-hidden="true"></i></h2>
 			</header>
 	
-			<table class="table table-responsive" ng-class="vm.table">
+			<table class="table table-striped table-responsive" ng-class="vm.table">  <!-- 'table-striped' would alternate rows -->
 				<thead>
 					<tr>
 						<th>Name</th>
@@ -31,7 +27,7 @@
 				</thead>
 				
 				<tbody>
-					<tr class="tableRow" ng-repeat="item in vm.data | orderBy:'quantity'">	<!-- sorting by quantity remaining (lowest quantity at the top) -quantity would be highest at top -->
+					<tr class="tableRow" ng-repeat="item in vm.data track by $index ">	<!-- sorting by quantity remaining (lowest quantity at the top) -quantity would be highest at top -->
 						<td>{{item.name | uppercase}}</td>
 						<td>{{vm.getPrice(item) | currency}} 
 							<img ng-show="item.discount > 0" src="https://tiy-learn-content.s3.amazonaws.com/98350f05-sale_2.png" alt="discount icon"></span>
@@ -51,15 +47,16 @@
 
 			<footer class="footer">
 
-				<h3>(+) ADD ITEM</h3>
+				<h3>[+] ADD ITEM</h3>
+				<h6>* Required fields</h6>
 															<!-- after required:   ng-minlength="3" ng-maxlength="8" -->
-				<form class="addItem" novalidate name='addItem'>
-					<input type='text' placeholder="Name" ng-model='vm.item.name' required>
-					<input type='number' placeholder="Price" ng-model='vm.item.price' required>
-					<input type='number' placeholder="Discount" ng-model='vm.item.discount' required>
-					<input type='number' placeholder="Quantity" ng-model='vm.item.quantity' required>
-					<input type='text' placeholder="Color" ng-model='vm.item.color' required>
-					<input class="submitButton" type='submit' ng-click="vm.addItem()" value="SUBMIT">		<!-- on click will add item to data in JS -->
+				<form class="addItem" novalidate name='addItem' ng-submit="vm.addItem(addItem.$valid)">
+					<input type='text' placeholder="Name *" ng-model='vm.item.name' required>
+					<input type='number' placeholder="Price *" ng-model='vm.item.price' required>
+					<input type='number' placeholder="Discount *" ng-model='vm.item.discount' required>
+					<input type='number' placeholder="Quantity *" ng-model='vm.item.quantity' required>
+					<input type='text' placeholder="Color *" ng-model='vm.item.color' required>
+					<input class="submitButton" type='submit'  value="SUBMIT">		<!-- on click will add item to data in JS -->
 				</form>
 
 			</footer>
@@ -68,6 +65,10 @@
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular.min.js"></script>
     <script src="https://code.jquery.com/jquery-1.12.4.js" integrity="sha256-Qw82+bXyGq6MydymqBxNPYTaUXXq7c8v3CwiYwLLNXU=" crossorigin="anonymous"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-    <script src='js/main.js'></script>
+    
+	<script src='js/main.js'></script>	<!-- put controllers and services after main.js -->
+	<script src='js/controllers/TableController.js'></script>
+	<script src='js/services/API.js'></script>
+
   </body>
 </html>

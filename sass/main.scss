@@ -22,11 +22,14 @@ body {
 
 .tableRow {
     font-size: 20px;
-    &:hover {                       /* For concatenating selectors together when nesting, you need to use the parent selector (&): */
-    background-color: #509236;
-    color: white;
-    }
+    text-shadow:2px 2px rgba(0,0,0,.1);
+        &:hover {                       /* For concatenating selectors together when nesting, you need to use the parent selector (&): */
+        background-color: #509236!important; /* the gray rows weren't turning green, was being overridden by boatstrap4 */
+        color: white;
+        transform: scale(1.10) skew(3deg);
+        }
 }
+
 
 button {
     color: #164399;
@@ -56,10 +59,10 @@ h3 {
     font-size: 20px;
     input {
         &.ng-invalid { 
-            background-color: red; 
+            box-shadow: 0px 0px 10px rgba(240,7,7,.4); 
         }
         &.ng-pristine {
-            background-color: white;
+            box-shadow: 0px 0px 0px rgb(255,255,255);
         }
         display: inline-block;
         width: 16%;
