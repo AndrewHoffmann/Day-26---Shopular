@@ -1,79 +1,68 @@
 body {
-    font-family: 'Arsenal', sans-serif;
+    font-family: 'Merriweather', serif;
+    font-size: 25px;
 }
 
 
 .header {
-    background-color: rgba(170, 166, 166, 0.3);   /* search google: #AAA6A6 rgb are the 3 #s, the a (0.3) replaces having to put an opacaity line */
-    h2 {
-        font-size: 50px;
-        color: #164399;
-            i {
-                color: #509236;
-        }   
+    background-color: #FFFFFF;
+    img {
+        height: 150px;
+        width: 200px;
+        display: block;
+        margin: auto;
+    }
+    h1 {
+        font-size: 40px;
+        color: #F9B214;  
+        text-align: center;
     }
 }
 
-.table {
-    th {
-        font-size: 30px;
+.new-todo {
+    width: 100%;
+}
+
+.items {
+    padding-left:0px;
+    width: 100%;
+    list-style: none;
+    li {
+        width:100%;
+        display:block;
+        height:2em;
+    }
+    p {
+        display: inline;
     }
 }
 
-.tableRow {
-    font-size: 20px;
-    text-shadow:2px 2px rgba(0,0,0,.1);
-        &:hover {                       /* For concatenating selectors together when nesting, you need to use the parent selector (&): */
-        background-color: #509236!important; /* the gray rows weren't turning green, was being overridden by boatstrap4 */
-        color: white;
-        transform: scale(1.10) skew(3deg);
-        }
+.check {
+    img {
+        height: 20px;
+        width: 20px;
+    }                   /* want image to not show, but show on hover and click */
 }
 
-
-button {
-    color: #164399;
+.delete {
+    float: right;
+    color: #F98414;
+    &:hover {
+        background-color: #F9D714;
+    }
 }
 
-.colorBox {
-	height:30px;
-	width:30px;
-	box-shadow:0px 0px 10px rgba(0,0,0,.2);
-    
-}
-
-.colorName {
-    text-transform: capitalize;
+.completed p {
+    text-decoration: line-through;
 }
 
 .footer {
-    background-color: rgba(170, 166, 166, 0.3);
-}
-
-h3 {
-    color: #509236;
-    font-size: 40px;
-}
-
-.addItem {
-    font-size: 20px;
-    input {
-        &.ng-invalid { 
-            box-shadow: 0px 0px 10px rgba(240,7,7,.4); 
-        }
-        &.ng-pristine {
-            box-shadow: 0px 0px 0px rgb(255,255,255);
-        }
+    .remaining {
+        position: absolute;
+        left: 1em;
+    }
+    li {
         display: inline-block;
-        width: 16%;
-    }
-    .submitButton {
-        background-color: #164399;
-        color: white;
+        float: right;
     }
 }
-
-/* change placeholder font color */
-input::-webkit-input-placeholder {
-            color: #164399;
-        }

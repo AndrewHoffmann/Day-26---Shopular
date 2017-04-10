@@ -1,43 +1,59 @@
+// prepare data in controller here, send to factory/service to run
+
 (function() {
     'use strict';
 
     angular
-        .module('shopular')
+        .module('toDo')
         .controller('TableController', function (API) {
 
         	const vm = this;
 
+			function Todo(i){
+				this.name =i,
+				this.status =false,
+				this.id = Date.now()
+			}
+
             // get all of our data
             vm.data = API.getData();
-
-            // set constants
-			vm.tax = 1.0575;
-
-			// + and - quantity buttons
-			vm.changeQuantity = function(item,add){
-				if(add) {
-					item.quantity++;
-				} else {
-					item.quantity--;
-				}
-			}
-
-			// price minus discount (if there is one) will show discounted price times tax.  
-			vm.getPrice = function(item){
-				return ((item.price-item.discount) * vm.tax)*item.quantity
-			}
 
 			// add item to data	when click submitButton
 			vm.addItem = function(valid){
                 if(valid){
-                    const kat = Object.assign({},vm.item); // after hit submit, this creates a new Object
-                    console.log(kat);                      // don't need, but shows new object (kat) created in Console Log
-                    vm.data = API.newItem(kat);            // 
+                	var todo = new Todo(vm.todo.name);
+				    vm.data = API.newItem(todo);            // 
 				    vm.item = {};                          // clears it out, overwritting object with blank
                 }
                 else {
-                    alert("INVALID, please complete");
+                    alert("Form incomplete. Please complete all required fields.");
                 }
 			}
+
+			// (button) check item
+			vm.checkItem = function(item){
+				vm.data = API.checkItem(item);
+			}
+
+			// (button) delete item
+			vm.deleteItem = function(item){
+				vm.data = API.deleteItem(item);
+			}
+
+			// (button) completed items
+			vm.checkCompleted = function(){
+				vm.data = API.checkCompleted();
+			}
+			
+			// (button) active items
+			vm.checkActive = function(){
+				vm.data = API.checkActive();
+			}
+
+			// (button) all items
+			vm.checkAll = function(){
+				vm.data = API.checkAll();
+			}
+			
         });
 })();

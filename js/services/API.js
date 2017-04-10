@@ -1,37 +1,71 @@
+// prepare data in controller, send to factory/service here to run
+
 (function() {
     'use strict';
 
     angular
-        .module('shopular')
+        .module('toDo')
         .factory('API', function($http) {
 
-        let data =     [{ "id": 2957, "name": "widget", "price": 32, "quantity": 203, "color": "red", "discount": 31 },
-                        { "id": 89274, "name": "golf club", "price": 98, "quantity": 10, "color": "black", "discount": 0 },
-                        { "id": 64, "name": "iPhone", "price": 499, "quantity": 2, "color": "white", "discount": 0 },
-                        { "id": 87363, "name": "bonzai tree", "price": 76, "quantity": 2, "color": "green", "discount": 0 },
-                        { "id": 1736, "name": "towel", "price": 55, "quantity": 30, "color": "brown", "discount": 10 },
-                        { "id": 4836, "name": "dog bed", "price": 99, "quantity": 10, "color": "beige", "discount": 50 },
-                        { "id": 829, "name": "waste basket", "price": 15, "quantity": 40, "color": "silver", "discount": 0 },
-                        { "id": 46, "name": "guitar", "price": 899, "quantity": 0, "color": "blue", "discount": 150 },
-                        { "id": 17456, "name": "matcha tea", "price": 42, "quantity": 4, "color": "green", "discount": 11 },
-                        { "id": 3292, "name": "enlightenment", "price": 99999, "quantity": 1, "color": "red", "discount": 0 },
-                        { "id": 533, "name": "eggs", "price": 5, "quantity": 12, "color": "brown", "discount": 1 },
-                        { "id": 683, "name": "pillow", "price": 27, "quantity": 10, "color": "black", "discount": 12 }
-                    ];
-                    
-/* I NEED TO COMMENT THE HELL OUT OF THIS */
+        let data =     [];
+
             return {
-                getData:() => {
-                    if(localStorage.getItem("items")){
-                        return JSON.parse(localStorage.getItem("items"));
+                getData:() => {                                             // going to return data  
+                    if(localStorage.getItem("items")){                      // if data in Local Storage ...
+                        data = JSON.parse(localStorage.getItem("items"))    // 
+                        return JSON.parse(localStorage.getItem("items"));   // ... (return ends function) return what is in Local Storage, JSON.parse allows you to convert string into JS array/object
                     }
-                    return data
+                    return data;                                            // if nothing in Local Storage, return default data
                 },
-                newItem:(item) => {         /* new function like getData, that when add new item will recall getData and update data */
-                    data.push(item);
-                    localStorage.setItem("items",JSON.stringify(data));
-                    return data 
-                }
-        };
+                newItem:(item) => {                                         // (new function like getData) when add new item will recall getData and update data 
+                    data.push(item);                                        // pushing new item into data array
+                    localStorage.setItem("items",JSON.stringify(data));     // LocalStorage cannot save JSON string, JSON.stringify converts it a string
+                    return data;                                            // updated the data and returning it
+                },                                                          
+        
+                checkItem:(item) => {                                       // check object function
+                    data.forEach(function(single,index){                    // going into the data and for each object in the array 
+                        if(single.id === item.id){                          // seeing if the object in loop is the object looking for
+                            single.status = !single.status;                 // then we reverse the status of that single item
+                        }
+                    });
+                    localStorage.setItem("items",JSON.stringify(data));     // any time manipulate data, want to add to local storage
+                    return data;                                            // updated the data and returning it
+                },
+
+                deleteItem:(item) => {                                      // delete object function
+                    data.forEach(function(single,index){                    // going into the data and for each object in the array 
+                        if(single.id === item.id){                          // seeing if the object in loop is the object looking for
+                            data.splice(index,1);                           // then splice (remove) that 1 object from the array
+                        }
+                    });
+                    localStorage.setItem("items",JSON.stringify(data));     // any time manipulate data, want to add to local storage
+                    return data;                                            // updated the data and returning it
+                },        
+
+                checkCompleted:() => {                                      // Completed filter 
+                    var completedList = data.filter(function(taco){         // taco = current item
+                        if(taco.status === true){
+                        return taco;
+                        }
+                    })    
+                    return completedList;                        
+                },
+
+                 checkActive:() => {                                      // Active filter 
+                    var activeList = data.filter(function(taco){          // taco = current item
+                        if(taco.status === false){
+                        return taco;
+                        }
+                    })  
+                    return activeList;                          
+                },
+
+                checkAll:() => {                                          // All filter 
+                    return data;                                          // return all data
+                    }                           
+
+            }
+                    
         })
 })();
